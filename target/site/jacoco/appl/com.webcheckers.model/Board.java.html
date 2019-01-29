@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Board.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">WebCheckers Application Tier Test Coverage</a> &gt; <a href="index.source.html" class="el_package">com.webcheckers.model</a> &gt; <span class="el_source">Board.java</span></div><h1>Board.java</h1><pre class="source lang-java linenums">package com.webcheckers.model;
+
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class Board {
+    private BoardView  BV;
+    private Player     redPlayer;
+    private Player     whitePLayer;
+<span class="fc" id="L11">    private ArrayList&lt;Piece&gt; AllPieces = new ArrayList&lt;&gt;();</span>
+
+<span class="fc" id="L13">    public Board(Player redPlayer,Player whitePlayer, BoardView bv){</span>
+<span class="fc" id="L14">        this.redPlayer = redPlayer;</span>
+<span class="fc" id="L15">        this.whitePLayer = whitePlayer;</span>
+<span class="fc" id="L16">        this.BV = bv;</span>
+<span class="fc" id="L17">       ArrayList&lt;Piece&gt; redPlayerPiece = this.makeRedPlayerPiece();</span>
+<span class="fc" id="L18">        ArrayList&lt;Piece&gt; whitePlayerPiece = this.makeWhitePlayerPiece();</span>
+<span class="fc" id="L19">        ArrayList&lt;Piece&gt; EmptyList = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L20">        EmptyList.addAll(redPlayerPiece);</span>
+<span class="fc" id="L21">        EmptyList.addAll(whitePlayerPiece);</span>
+<span class="fc" id="L22">        this.AllPieces = EmptyList;</span>
+<span class="fc" id="L23">    }</span>
+
+    /**
+     * Initialize all the pieces for redPlayer
+     * The boardview is initialize from down to top which means index 0 is the bottom row
+     */
+    public ArrayList&lt;Piece&gt; makeRedPlayerPiece(){
+<span class="fc" id="L30">        ArrayList&lt;Piece&gt; redPlayerPiece  = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L31">        ArrayList&lt;Row&gt; RowIterator = BV.iterator();</span>
+<span class="fc bfc" id="L32" title="All 2 branches covered.">        for(int col = 0; col &lt; 3; col++){</span>
+<span class="fc" id="L33">            List&lt;Space&gt; AllSpace = RowIterator.get(col).iterator();</span>
+<span class="fc bfc" id="L34" title="All 2 branches covered.">            for(int row =0; row &lt; 8; row ++){</span>
+<span class="fc bfc" id="L35" title="All 2 branches covered.">                if(AllSpace.get(row).isValid()){</span>
+                    //true is red false is white
+<span class="fc" id="L37">                    Piece newPiece = new Piece(row,col,true, redPlayer);</span>
+<span class="fc" id="L38">                    BV.iterator().get(col).iterator().get(row).addPiece(newPiece);</span>
+<span class="fc" id="L39">                    redPlayerPiece.add(newPiece);</span>
+                }
+            }
+        }
+<span class="fc" id="L43">        redPlayer.setPiece(redPlayerPiece);</span>
+<span class="fc" id="L44">        return redPlayerPiece;</span>
+    }
+
+    /**
+     * Initialize all the pieces for whitePlayer
+     */
+    public ArrayList&lt;Piece&gt; makeWhitePlayerPiece(){
+<span class="fc" id="L51">        ArrayList&lt;Piece&gt; whitePlayerPiece = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L52">        ArrayList&lt;Row&gt; RowIterator = BV.iterator();</span>
+<span class="fc bfc" id="L53" title="All 2 branches covered.">        for(int col=5; col &lt; 8; col++){</span>
+<span class="fc" id="L54">            List&lt;Space&gt; AllSpace = RowIterator.get(col).iterator();</span>
+<span class="fc bfc" id="L55" title="All 2 branches covered.">            for(int row = 0; row&lt;8;row++){</span>
+<span class="fc bfc" id="L56" title="All 2 branches covered.">                if(AllSpace.get(row).isValid()){</span>
+<span class="fc" id="L57">                    Piece newPiece = new Piece(row,col,false, whitePLayer);</span>
+<span class="fc" id="L58">                    BV.iterator().get(col).iterator().get(row).addPiece(newPiece);</span>
+<span class="fc" id="L59">                    whitePlayerPiece.add(newPiece);</span>
+                }
+            }
+
+        }
+<span class="fc" id="L64">        whitePLayer.setPiece(whitePlayerPiece);</span>
+<span class="fc" id="L65">        return whitePlayerPiece;</span>
+    }
+
+
+    public ArrayList&lt;Row&gt; iterator(){
+<span class="fc" id="L70">        return BV.iterator();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span>Application Tier</div></body></html>
